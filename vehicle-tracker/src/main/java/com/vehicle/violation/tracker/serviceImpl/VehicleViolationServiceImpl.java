@@ -37,7 +37,8 @@ public class VehicleViolationServiceImpl implements VehicleViolationService {
 
 
 	/**
-	 * 
+	 * This Method used for getting all the vehicle details which has already 
+	 * done the violations. 
 	 */
 	public List<Vehicle> getAllVehiclesOfDeviation(List<String> vehicleNumbers) { 
 		List<Vehicle> vehicleList = new ArrayList<Vehicle>();
