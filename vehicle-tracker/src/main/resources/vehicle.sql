@@ -1,0 +1,10 @@
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model ) values ('KA01-HB-3561', 'Lika', '4/9/2012', 'red', 'TATA', 'tiago');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3562', 'Smita', '14/9/2012', 'black', 'Hyundai', 'verna');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3563', 'Ipee', '4/12/2014', 'cyan', 'TATA', 'nexon');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3564', 'Rana', '4/9/2015', 'brown', 'TATA', 'tiago');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3565', 'Sunita', '1/9/2016', 'red', 'kia', 'sonet');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3566', 'Jashmine', '7/9/2017', 'blue', 'Renault', 'suvX');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3567', 'Bunty', '25/10/2012', 'white', 'Hyundai', 'i20');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3568', 'Jitu', '7/6/2012', 'red', 'TATA', 'altroz');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3569', 'Karan', '1/1/2018', 'orange', 'TATA', 'safari');
+insert into testdb.vehicle (vehicle_number,vehicle_owner,vehicle_purchased_date,vehicle_color,vehicle_brand,  vehicle_model) values ('KA01-HB-3570', 'Laila', '9/9/2013', 'red', 'TATA', 'tigor');
