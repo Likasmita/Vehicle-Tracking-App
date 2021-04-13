@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.vehicle.tracker</groupId>
-	<artifactId>email.notifer</artifactId>
+	<artifactId>email-notifer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>email-notifer</name>
 	<description>Demo project for Spring Boot</description>
