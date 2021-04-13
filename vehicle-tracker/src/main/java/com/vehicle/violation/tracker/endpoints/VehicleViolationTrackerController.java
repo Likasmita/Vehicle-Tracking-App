@@ -1,6 +1,7 @@
 package com.vehicle.violation.tracker.endpoints;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.vehicle.violation.tracker.entities.Vehicle;
 import com.vehicle.violation.tracker.entities.VehicleViolation;
 import com.vehicle.violation.tracker.model.VehiclesPenaltyResponse;
 import com.vehicle.violation.tracker.model.VehilceToPenaltyMapDto;
+import com.vehicle.violation.tracker.services.EmailNotifierProxy;
 import com.vehicle.violation.tracker.services.VehicleViolationService;
 
 /**
@@ -32,17 +34,19 @@ public class VehicleViolationTrackerController {
 	@Autowired
 	VehicleViolationService violationService;
 	
-
+	@Autowired
+	EmailNotifierProxy emailProxy;
 
 	@RequestMapping(value = "/fetchVehicleInfos" , method = RequestMethod.GET)
-	public VehiclesPenaltyResponse findAllVehicleDetails(@RequestParam("vehicleNumbers") List<String> vehicleNumbers) {
+	public VehiclesPenaltyResponse findAllVehicleDetails(@RequestParam("email") String email,@RequestParam("vehicleNumbers") List<String> vehicleNumbers) {
 		VehiclesPenaltyResponse vpResp = new VehiclesPenaltyResponse();
 		//get list of vehicle details 
 		List<Vehicle> vehicleDetailList =  violationService.getAllVehiclesOfDeviation(vehicleNumbers);
 		vpResp.setVehicleDetails(vehicleDetailList);
 		
 		//populate highlight vehicle details with just vehicle numb to penalty map 
-		populateReqVehicleToPenaltyMap(vpResp,vehicleDetailList);
+		populateReqVehicleToPenaltyMap(email,vpResp,vehicleDetailList);
+		
 		
 		return vpResp;
 	}
@@ -53,9 +57,10 @@ public class VehicleViolationTrackerController {
 	 * @param vpResp
 	 * @param vehicleDetailList
 	 */
-	private void populateReqVehicleToPenaltyMap(VehiclesPenaltyResponse vpResp, List<Vehicle> vehicleDetailList) {
+	private void populateReqVehicleToPenaltyMap(String email,VehiclesPenaltyResponse vpResp, List<Vehicle> vehicleDetailList) {
 		
 		List<VehilceToPenaltyMapDto> VehilceToPenaltyMapDtoList = new ArrayList<>();
+		List<String> list = new LinkedList<String>();
 				
 		for(Vehicle vhcle : vehicleDetailList) {
 			double totalDue = 0;
@@ -69,8 +74,11 @@ public class VehicleViolationTrackerController {
 				}
 			}
 			vehilceToPenaltyMapDto.setToalDue(totalDue);
+			list.add(vhcle.getVehicleNumber());
+			
 			VehilceToPenaltyMapDtoList.add(vehilceToPenaltyMapDto);
 		}
+		emailProxy.sendNotifier(email, list);
 		vpResp.setVehicleToPenaltyMap(VehilceToPenaltyMapDtoList);
 	}
 

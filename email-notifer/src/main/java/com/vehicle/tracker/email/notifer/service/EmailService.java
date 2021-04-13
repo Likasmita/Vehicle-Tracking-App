@@ -18,8 +18,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-	public void sendEmailNotification(List<String> vehicleNumbers, String email)
-			throws AddressException, MessagingException{
+	/**
+	 * 
+	 * @param email
+	 * @param list
+	 * @throws AddressException
+	 * @throws MessagingException
+	 */
+	public void sendEmailNotification(String email, List<String> list) throws AddressException, MessagingException {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -36,13 +42,14 @@ public class EmailService {
 
 		msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse("daleilikasmita11@gmail.com"));
 		msg.setSubject("Traffic Violators");
-		msg.setContent("Hi, Violators are there!" + '\r'
-				+ " Please catch them and collect the penalty for these vehicle numbers!" + '\n' + vehicleNumbers,
+		msg.setContent(
+				"Hi, Violators are there! For more details on penalty, Please check on the Device response!"
+						+ " Catch them and collect the penalty for these vehicle numbers! " + '\n' + list,
 				"text/html");
 		msg.setSentDate(new Date());
 
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
-		messageBodyPart.setContent(vehicleNumbers, "text/html");
+		messageBodyPart.setContent(list, "text/html");
 		Transport.send(msg);
 	}
 

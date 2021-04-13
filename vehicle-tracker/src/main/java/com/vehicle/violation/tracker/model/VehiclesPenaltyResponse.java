@@ -11,6 +11,8 @@ public class VehiclesPenaltyResponse {
 	
 	private	List<Vehicle> vehicleDetails;
 	
+	private List<VehilceToPenaltyMapDto> vehicleToPenaltyMap;
+	
 	/**
 	 * @return the vehicleDetails
 	 */
@@ -39,7 +41,7 @@ public class VehiclesPenaltyResponse {
 		this.vehicleToPenaltyMap = vehicleToPenaltyMap;
 	}
 
-	private List<VehilceToPenaltyMapDto> vehicleToPenaltyMap;
+	
 	
 
 }

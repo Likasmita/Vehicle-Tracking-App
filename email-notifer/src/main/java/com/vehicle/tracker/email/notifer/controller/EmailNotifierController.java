@@ -4,7 +4,6 @@
 package com.vehicle.tracker.email.notifer.controller;
 
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -27,19 +26,16 @@ public class EmailNotifierController {
 	EmailService emailService;
 	
 	   @RequestMapping(value = "/sendNotification")
-	   public String sendNotifier(@RequestParam("email") String email, @RequestParam("vehicleNumbers") List<String> vehicleNumbers)  {
+	   public void sendNotifier(@RequestParam("email") String email,@RequestParam("vehicleNumbers") List<String> list)  {
 		  
 		   
 		   try {
-			emailService.sendEmailNotification(vehicleNumbers,email);
+			emailService.sendEmailNotification(email,list);
 		} catch (AddressException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} 
-		   return "Email sent successfully!";
 		   
-		  
-		  
 	   }   
 }
