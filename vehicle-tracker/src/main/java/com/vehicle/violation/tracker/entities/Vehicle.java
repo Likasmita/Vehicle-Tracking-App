@@ -1,6 +1,7 @@
 package com.vehicle.violation.tracker.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,40 +15,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="VEHICLE")
+@Table(name = "VEHICLE")
 public class Vehicle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int vehicleId;
 
-	@OneToMany(targetEntity = VehicleViolation.class , cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@JoinColumn(name="vehicle_penalty_Number",referencedColumnName="vehicleNumber")
-	private List<VehicleViolation> vehicleViolations;
+	@OneToMany(mappedBy = "vehicle")
+	private List<VehicleViolation> vehicleViolations = new ArrayList<>();
 
-	@Column(name="vehicleNumber",unique = true)
+	@Column(name = "vehicleNumber")
 	private String vehicleNumber;
-	
-	@Column(name="vehicleOwner")
+
+	@Column(name = "vehicleOwner")
 	private String vehicleOwner;
-	
-	@Column(name="vehiclePurchasedDate")
+
+	@Column(name = "vehiclePurchasedDate")
 	private String vehiclePurchasedDate;
-	
-	@Column(name="vehicleColor")
+
+	@Column(name = "vehicleColor")
 	private String vehicleColor;
-	
-	@Column(name="vehicleBrand")
+
+	@Column(name = "vehicleBrand")
 	private String vehicleBrand;
-	
-	@Column(name="vehicleModel")
+
+	@Column(name = "vehicleModel")
 	private String vehicleModel;
-	
 
 	/*
 	 * public Vehicle(){
@@ -62,119 +59,69 @@ public class Vehicle implements Serializable {
 	 * vehicleModel; }
 	 */
 
-
-
-	public int getId() {
-		return id;
+	public int getVehicleId() {
+		return vehicleId;
 	}
 
-
-
-
-	public void setId(int id) {
-		this.id = id;
+	public void setVehicleId(int vehicleId) {
+		this.vehicleId = vehicleId;
 	}
-
-
-
 
 	public List<VehicleViolation> getVehicleViolations() {
 		return vehicleViolations;
 	}
 
-
-
-
 	public void setVehicleViolations(List<VehicleViolation> vehicleViolations) {
 		this.vehicleViolations = vehicleViolations;
 	}
-
-
-
 
 	public String getVehicleNumber() {
 		return vehicleNumber;
 	}
 
-
-
-
 	public void setVehicleNumber(String vehicleNumber) {
 		this.vehicleNumber = vehicleNumber;
 	}
-
-
-
 
 	public String getVehicleOwner() {
 		return vehicleOwner;
 	}
 
-
-
-
 	public void setVehicleOwner(String vehicleOwner) {
 		this.vehicleOwner = vehicleOwner;
 	}
-
-
-
 
 	public String getVehiclePurchasedDate() {
 		return vehiclePurchasedDate;
 	}
 
-
-
-
 	public void setVehiclePurchasedDate(String vehiclePurchasedDate) {
 		this.vehiclePurchasedDate = vehiclePurchasedDate;
 	}
-
-
-
 
 	public String getVehicleColor() {
 		return vehicleColor;
 	}
 
-
-
-
 	public void setVehicleColor(String vehicleColor) {
 		this.vehicleColor = vehicleColor;
 	}
-
-
-
 
 	public String getVehicleBrand() {
 		return vehicleBrand;
 	}
 
-
-
-
 	public void setVehicleBrand(String vehicleBrand) {
 		this.vehicleBrand = vehicleBrand;
 	}
-
-
-
 
 	public String getVehicleModel() {
 		return vehicleModel;
 	}
 
-
-
-
 	public void setVehicleModel(String vehicleModel) {
 		this.vehicleModel = vehicleModel;
 	}
-
-
-
 
 	@Override
 	public String toString() {

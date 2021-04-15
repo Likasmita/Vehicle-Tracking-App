@@ -25,77 +25,71 @@ import com.vehicle.violation.tracker.services.VehicleViolationService;
  *
  */
 
-
 @RestController
 @EnableEurekaClient
 public class VehicleViolationTrackerController {
-	
 
 	@Autowired
 	VehicleViolationService violationService;
-	
+
 	@Autowired
 	EmailNotifierProxy emailProxy;
 
-	@RequestMapping(value = "/fetchVehicleInfos" , method = RequestMethod.GET)
-	public VehiclesPenaltyResponse findAllVehicleDetails(@RequestParam("email") String email,@RequestParam("vehicleNumbers") List<String> vehicleNumbers) {
+	@RequestMapping(value = "/fetchVehicleInfos", method = RequestMethod.GET)
+	public VehiclesPenaltyResponse findAllVehicleDetails(@RequestParam("email") String email,
+			@RequestParam("vehicleNumbers") List<String> vehicleNumbers) {
 		VehiclesPenaltyResponse vpResp = new VehiclesPenaltyResponse();
-		//get list of vehicle details 
-		List<Vehicle> vehicleDetailList =  violationService.getAllVehiclesOfDeviation(vehicleNumbers);
+		// get list of vehicle details
+		List<Vehicle> vehicleDetailList = violationService.getAllVehiclesOfDeviation(vehicleNumbers);
 		vpResp.setVehicleDetails(vehicleDetailList);
-		
-		//populate highlight vehicle details with just vehicle numb to penalty map 
-		populateReqVehicleToPenaltyMap(email,vpResp,vehicleDetailList);
-		
-		
+
+		// populate highlight vehicle details with just vehicle numb to penalty map
+		populateReqVehicleToPenaltyMap(email, vpResp, vehicleDetailList);
+
 		return vpResp;
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param vpResp
 	 * @param vehicleDetailList
 	 */
-	private void populateReqVehicleToPenaltyMap(String email,VehiclesPenaltyResponse vpResp, List<Vehicle> vehicleDetailList) {
-		
+	private void populateReqVehicleToPenaltyMap(String email, VehiclesPenaltyResponse vpResp,
+			List<Vehicle> vehicleDetailList) {
+
 		List<VehilceToPenaltyMapDto> VehilceToPenaltyMapDtoList = new ArrayList<>();
 		List<String> list = new LinkedList<String>();
-				
-		for(Vehicle vhcle : vehicleDetailList) {
-			double totalDue = 0;
-			VehilceToPenaltyMapDto vehilceToPenaltyMapDto = new VehilceToPenaltyMapDto();
-			vehilceToPenaltyMapDto.setVehicleNumb(vhcle.getVehicleNumber());
-			
-			List<VehicleViolation> vhcleVilaotionList =vhcle.getVehicleViolations();
-			if(vhcleVilaotionList!=null && !vhcleVilaotionList.isEmpty()) {
-				for(VehicleViolation violation : vhcleVilaotionList) {
-					totalDue = totalDue + violation.getPenaltyAmount();
+		if (vehicleDetailList != null && vehicleDetailList.size() > 0) {
+			for (Vehicle vhcle : vehicleDetailList) {
+				double totalDue = 0;
+				VehilceToPenaltyMapDto vehilceToPenaltyMapDto = new VehilceToPenaltyMapDto();
+				vehilceToPenaltyMapDto.setVehicleNumb(vhcle.getVehicleNumber());
+
+				List<VehicleViolation> vhcleVilaotionList = vhcle.getVehicleViolations();
+				if (vhcleVilaotionList != null && !vhcleVilaotionList.isEmpty()) {
+					for (VehicleViolation violation : vhcleVilaotionList) {
+						totalDue = totalDue + violation.getPenaltyAmount();
+					}
 				}
+				vehilceToPenaltyMapDto.setToalDue(totalDue);
+				list.add(vhcle.getVehicleNumber());
+
+				VehilceToPenaltyMapDtoList.add(vehilceToPenaltyMapDto);
 			}
-			vehilceToPenaltyMapDto.setToalDue(totalDue);
-			list.add(vhcle.getVehicleNumber());
-			
-			VehilceToPenaltyMapDtoList.add(vehilceToPenaltyMapDto);
+			emailProxy.sendNotifier(email, list);
 		}
-		emailProxy.sendNotifier(email, list);
 		vpResp.setVehicleToPenaltyMap(VehilceToPenaltyMapDtoList);
 	}
 
-
-	
 	/**
-	 * additional code for set up , not req 
+	 * additional code for set up , not required
+	 * 
 	 * @param file
 	 */
-	@RequestMapping(value = "/saveAllInfosOfVehicle" , method = RequestMethod.POST)
+	@RequestMapping(value = "/saveAllInfosOfVehicle", method = RequestMethod.POST)
 	public void insertAllDeviatedVehicle(@RequestParam("file") MultipartFile file) {
-		
+
 		violationService.saveCSVFile(file);
 	}
-	
-	
-
-
 
 }

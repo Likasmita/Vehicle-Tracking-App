@@ -7,11 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="VEHICLE_VIOLATION")
+@Table(name = "VEHICLE_VIOLATION")
 public class VehicleViolation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,29 +20,31 @@ public class VehicleViolation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int violationId;
-	
-	@Column(name="violationDate")
+
+	@Column(name = "violationDate")
 	private String violationDate;
-	
-	@Column(name="penaltyAmount")
+
+	@Column(name = "penaltyAmount")
 	private double penaltyAmount;
-	
-	@Column(name="violationDone")
-    private String violationDone;
-	
-	@Column(name="vehicleNumber")
+
+	@Column(name = "violationDone")
+	private String violationDone;
+
+	@Column(name = "vehicleNumber")
 	private String vehicleNumber;
-	
-	@Column(name="penaltyDone")
+
+	@Column(name = "penaltyDone")
 	private boolean penaltyDone;
-	
-	@Column(name="penaltyType")
+
+	@Column(name = "penaltyType")
 	private String penaltyType;
-	
-	@Column(name="vehicleType")
+
+	@Column(name = "vehicleType")
 	private String vehicleType;
-	
-	
+
+	@ManyToOne
+	@JoinColumn(name = "vehicleId")
+	private Vehicle vehicle;
 
 	public int getViolationId() {
 		return violationId;
@@ -90,6 +93,21 @@ public class VehicleViolation implements Serializable {
 	public void setPenaltyDone(boolean penaltyDone) {
 		this.penaltyDone = penaltyDone;
 	}
-		
+
+	public String getPenaltyType() {
+		return penaltyType;
+	}
+
+	public void setPenaltyType(String penaltyType) {
+		this.penaltyType = penaltyType;
+	}
+
+	public String getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(String vehicleType) {
+		this.vehicleType = vehicleType;
+	}
 
 }

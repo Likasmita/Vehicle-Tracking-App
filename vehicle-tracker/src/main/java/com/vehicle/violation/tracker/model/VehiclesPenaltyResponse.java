@@ -8,11 +8,11 @@ import com.vehicle.violation.tracker.entities.Vehicle;
 
 @Component
 public class VehiclesPenaltyResponse {
-	
-	private	List<Vehicle> vehicleDetails;
-	
+
+	private List<Vehicle> vehicleDetails;
+
 	private List<VehilceToPenaltyMapDto> vehicleToPenaltyMap;
-	
+
 	/**
 	 * @return the vehicleDetails
 	 */
@@ -40,8 +40,5 @@ public class VehiclesPenaltyResponse {
 	public void setVehicleToPenaltyMap(List<VehilceToPenaltyMapDto> vehicleToPenaltyMap) {
 		this.vehicleToPenaltyMap = vehicleToPenaltyMap;
 	}
-
-	
-	
 
 }
